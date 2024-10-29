@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de Nosotros - Farmacia La Luz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e0f7e0; /* Fondo verde claro */
+            height: 100vh; /* Altura completa de la ventana */
+            overflow: hidden; /* Evitar el scroll */
+        }
+        h2 {
+            color: #008000; /* Verde oscuro */
+            text-align: center;
+            margin-top: 20px;
+        }
+        .navbar {
+            background-color: #004d00; /* Verde oscuro para la navbar */
+        }
+        .footer {
+            background-color: #008000;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .footer a {
+            color: white;
+            margin: 0 10px;
+        }
+        .info-section {
+            text-align: center;
+            margin-bottom: 20px; /* Espaciado inferior */
+        }
+        .responsive-image {
+            width: 100%; /* Ancho completo */
+            height: auto; /* Altura automática para mantener la proporción */
+            max-height: 300px; /* Altura máxima para limitar el tamaño */
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class='navbar-brand' href='#'>
+        <img src='/imagenes/logo.jpg' alt='Logo Farmacia La Luz' style="max-height: 50px;"> <!-- Ajustar tamaño del logo -->
+    </a>  
+    <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
+        <span class='navbar-toggler-icon'></span>
+    </button>  
+    <div class='collapse navbar-collapse' id='navbarNav'>  
+       <ul class='navbar-nav ml-auto'>  
+           <li class='nav-item'><a class='nav-link text-white' href='/'>Inicio</a></li>
+           <li class='nav-item'><a class='nav-link text-white' href='/login'>Login</a></li>
+           <li class='nav-item'><a class='nav-link text-white' href='/acerca'>Acerca de Nosotros</a></li>
+           <li class='nav-item'><a class='nav-link text-white' href='/productos'>Productos</a></li>
+           <li class='nav-item'><a class='nav-link text-white' href='/contactanos'>Contáctanos</a></li>
+       </ul>  
+   </div>  
+</nav>
+
+<div class='container mt-5'>
+    <h2>Bienvenido a Farmacia La Luz</h2>
+    
+    <!-- Información de la empresa -->
+    <div class="info-section">
+        <p><strong>Tu salud es nuestra prioridad.</strong></p>
+        <p>En Farmacia La Luz, nos dedicamos a ofrecer un servicio confiable y accesible en el suministro de medicamentos y productos de salud. Nuestro equipo está aquí para atender tus necesidades.</p>
+    </div>
+
+    <!-- Imagen de fondo -->
+    <img src="/imagenes/capturas.JPG" alt="Acerca de Nosotros" class="img-fluid responsive-image mt-3">
+</div>
+
+<!-- Footer -->
+<footer class="footer">  
+    <p>Contáctanos: 51967823740</p>  
+    <p>Síguenos en:</p>  
+    <a href="#" target="_blank">Facebook</a> |  
+    <a href="#" target="_blank">Twitter</a> |  
+    <a href="#" target="_blank">Instagram</a>  
+</footer>
+
+<!-- Scripts -->
+<script src='https://code.jquery.com/jquery-3.5.1.min.js'></script> 
+<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script> 
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+
+</body>
+</html>

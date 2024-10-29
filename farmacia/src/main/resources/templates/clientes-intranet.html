@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Intranet de Farmacia - Clientes</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+
+  <h1>Clientes</h1>
+
+  <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#agregarModal">Agregar Cliente</button>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Teléfono</th>
+      <th>Dirección</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cliente : ${clientes}">
+      <td th:text="${cliente.id_cliente}"></td>
+      <td th:text="${cliente.nombre}"></td>
+      <td th:text="${cliente.apellido}"></td>
+      <td th:text="${cliente.telefono}"></td>
+      <td th:text="${cliente.direccion}"></td>
+      <td>
+        <button type="button" class="btn btn-warning" data-toggle="modal"
+                data-target="#editarModal"
+                th:data-id="${cliente.id_cliente}"
+                th:data-nombre="${cliente.nombre}"
+                th:data-apellido="${cliente.apellido}"
+                th:data-telefono="${cliente.telefono}"
+                th:data-direccion="${cliente.direccion}">
+          Editar
+        </button>
+
+        <a th:href="@{/clientes/eliminar/{id}(id=${cliente.id_cliente})}" class="btn btn-danger"
+           onclick="return confirm('¿Estás seguro de que deseas eliminar este cliente?');">Eliminar</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal para agregar cliente -->
+  <div class="modal fade" id="agregarModal" tabindex="-1" role="dialog" aria-labelledby="agregarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="agregarModalLabel">Agregar Cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="#" th:action="@{/clientes/guardar}" method="post">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input type="text" id="nombre" name="nombre" class="form-control" required/>
+            </div>
+
+            <div class="form-group">
+              <label for="apellido">Apellido:</label>
+              <input type="text" id="apellido" name="apellido" class="form-control" required/>
+            </div>
+
+            <div class="form-group">
+              <label for="telefono">Teléfono:</label>
+              <input type="text" id="telefono" name="telefono" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+              <label for="direccion">Dirección:</label>
+              <input type="text" id="direccion" name="direccion" class="form-control"/>
+            </div>
+
+            <!-- Botón para agregar -->
+            <button type="submit" class="btn btn-primary">Agregar Cliente</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para editar cliente -->
+  <div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarModalLabel">Editar Cliente</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="#" th:action="@{/clientes/actualizar}" method='post'>
+            <!-- Campo oculto para ID -->
+            <input type='hidden' id='id_cliente' name='id_cliente'/>
+
+            <!-- Campos editables -->
+            <div class='form-group'>
+              <label for='nombreEditado'>Nombre:</label>
+              <input type='text' id='nombreEditado' name='nombre' class='form-control' required/>
+            </div>
+
+            <div class='form-group'>
+              <label for='apellidoEditado'>Apellido:</label>
+              <input type='text' id='apellidoEditado' name='apellido' class='form-control' required/>
+            </div>
+
+            <div class='form-group'>
+              <label for='telefonoEditado'>Teléfono:</label>
+              <input type='text' id='telefonoEditado' name='telefono' class='form-control'/>
+            </div>
+
+            <div class='form-group'>
+              <label for='direccionEditada'>Dirección:</label>
+              <input type='text' id='direccionEditada' name='direccion' class='form-control'/>
+            </div>
+
+            <!-- Botón para actualizar -->
+            <button type='submit' class='btn btn-primary'>Actualizar Cliente</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Script para llenar el modal con los datos del cliente a editar
+  $('#editarModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget); // Botón que abrió el modal
+
+      // Extraer información de los atributos data-* del botón
+      var id = button.data('id');
+      var nombre = button.data('nombre');
+      var apellido = button.data('apellido');
+      var telefono = button.data('telefono');
+      var direccion = button.data('direccion');
+
+      // Actualizar el contenido del modal
+      var modal = $(this);
+      modal.find('#id_cliente').val(id); // Cambiado a 'id_cliente'
+      modal.find('#nombreEditado').val(nombre);
+      modal.find('#apellidoEditado').val(apellido);
+      modal.find('#telefonoEditado').val(telefono);
+      modal.find('#direccionEditada').val(direccion);
+  });
+</script>
+
+</body>
+</html>

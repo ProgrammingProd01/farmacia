@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Intranet de Farmacia - Empleados</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <h1>Empleados</h1>
+
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#agregarModal">Agregar Empleado</button>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Cargo</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="empleado : ${empleados}">
+            <td th:text="${empleado.id_empleado}"></td>
+            <td th:text="${empleado.nombre}"></td>
+            <td th:text="${empleado.apellido}"></td>
+            <td th:text="${empleado.cargo}"></td>
+            <td th:text="${empleado.telefono}"></td>
+            <td>
+                <button type="button" class="btn btn-warning" data-toggle="modal"
+                        data-target="#editarModal"
+                        th:data-id="${empleado.id_empleado}"
+                        th:data-nombre="${empleado.nombre}"
+                        th:data-apellido="${empleado.apellido}"
+                        th:data-cargo="${empleado.cargo}"
+                        th:data-telefono="${empleado.telefono}">
+                    Editar
+                </button>
+
+                <a th:href="@{/empleados/eliminar/{id}(id=${empleado.id_empleado})}" class="btn btn-danger"
+                   onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal para agregar empleado -->
+    <div class="modal fade" id="agregarModal" tabindex="-1" role="dialog" aria-labelledby="agregarModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agregarModalLabel">Agregar Empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{/empleados/guardar}" method="post">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" id="apellido" name="apellido" class="form-control" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cargo">Cargo:</label>
+                            <input type="text" id="cargo" name="cargo" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono:</label>
+                            <input type="text" id="telefono" name="telefono" class="form-control"/>
+                        </div>
+
+                        <!-- Botón para agregar -->
+                        <button type="submit" class="btn btn-primary">Agregar Empleado</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar empleado -->
+    <div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarModalLabel">Editar Empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario para editar -->
+                    <form action="#" th:action="@{/empleados/actualizar}" method="post">
+                        <!-- Campo oculto para el ID del empleado -->
+                        <input type="hidden" id="idEmpleadoEditado" name="id_empleado"/>
+
+                        <!-- Campos del formulario -->
+                        <div class= "form-group">
+                            <label for= "nombreEditado">Nombre:</label >
+                            <input type= "text"id= "nombreEditado"name= "nombre"class= "form-control"
+                                   required/>
+                        </div >
+
+                        <div class= "form-group">
+                            <label for= "apellidoEditado">Apellido:</label >
+                            <input type= "text"id= "apellidoEditado"name= "apellido"class= "form-control"
+                                   required/>
+                        </div >
+
+                        <div class= "form-group">
+                            <label for= "cargoEditado">Cargo:</label >
+                            <input type= "text"id= "cargoEditado"name= "cargo"class= "form-control"/>
+                        </div >
+
+                        <div class= "form-group">
+                            <label for= "telefonoEditado">Teléfono:</label >
+                            <input type= "text"id= "telefonoEditado"name= "telefono"class= "form-control"/>
+                        </div >
+
+                        <!-- Botón para actualizar -->
+                        <button type= "submit"class= "btn btn-primary">Actualizar Empleado</button >
+                    </form >
+                </div >
+            </div >
+        </div >
+    </div >
+
+</div>
+
+<script>
+    // Script para llenar el modal con los datos del empleado a editar
+    $('#editarModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget); // Botón que abrió el modal
+
+      // Extraer información de los atributos data-* del botón
+      var id = button.data('id');
+      var nombre = button.data('nombre');
+      var apellido = button.data('apellido');
+      var cargo = button.data('cargo');
+      var telefono = button.data('telefono');
+
+      // Actualizar el contenido del modal
+      var modal = $(this);
+      modal.find('#idEmpleadoEditado').val(id);
+      modal.find('#nombreEditado').val(nombre);
+      modal.find('#apellidoEditado').val(apellido);
+      modal.find('#cargoEditado').val(cargo);
+      modal.find('#telefonoEditado').val(telefono);
+    });
+</script>
+
+</body>
+</html>
